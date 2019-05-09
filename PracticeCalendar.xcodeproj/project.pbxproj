@@ -12,6 +12,8 @@
 		89D56F9F2279FB1D0092FC49 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 89D56F9D2279FB1D0092FC49 /* Main.storyboard */; };
 		89D56FA12279FB200092FC49 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 89D56FA02279FB200092FC49 /* Assets.xcassets */; };
 		89D56FA42279FB200092FC49 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 89D56FA22279FB200092FC49 /* LaunchScreen.storyboard */; };
+		89D56FB02279FF920092FC49 /* DateCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D56FAF2279FF920092FC49 /* DateCollectionViewCell.swift */; };
+		89D56FB2227A00EB0092FC49 /* CalendarVars.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D56FB1227A00EB0092FC49 /* CalendarVars.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +24,8 @@
 		89D56FA02279FB200092FC49 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		89D56FA32279FB200092FC49 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89D56FA52279FB200092FC49 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		89D56FAF2279FF920092FC49 /* DateCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateCollectionViewCell.swift; sourceTree = "<group>"; };
+		89D56FB1227A00EB0092FC49 /* CalendarVars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarVars.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,7 +60,9 @@
 			children = (
 				89D56F992279FB1D0092FC49 /* AppDelegate.swift */,
 				89D56F9B2279FB1D0092FC49 /* ViewController.swift */,
+				89D56FB1227A00EB0092FC49 /* CalendarVars.swift */,
 				89D56F9D2279FB1D0092FC49 /* Main.storyboard */,
+				89D56FAF2279FF920092FC49 /* DateCollectionViewCell.swift */,
 				89D56FA02279FB200092FC49 /* Assets.xcassets */,
 				89D56FA22279FB200092FC49 /* LaunchScreen.storyboard */,
 				89D56FA52279FB200092FC49 /* Info.plist */,
@@ -136,7 +142,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				89D56F9C2279FB1D0092FC49 /* ViewController.swift in Sources */,
+				89D56FB02279FF920092FC49 /* DateCollectionViewCell.swift in Sources */,
 				89D56F9A2279FB1D0092FC49 /* AppDelegate.swift in Sources */,
+				89D56FB2227A00EB0092FC49 /* CalendarVars.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
