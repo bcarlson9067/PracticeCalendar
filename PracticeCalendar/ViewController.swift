@@ -16,6 +16,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var nextNumberOfEmptyBox = Int()
     var previousNumberOfEmptyBox = 0
     var direction = 0
+    var positionIndex = 0
     
     let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
     let daysOfMonth = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
@@ -33,19 +34,19 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     @IBAction func backButtonPressed(_ sender: Any) {
         switch currentMonth {
         case "January":
+            direction = -1
+            getStartDayPosition()
             month = 11
             year -= 1
-            direction = -1
             currentMonth = months[month - 1]
-            getStartDayPosition()
             monthLabel.text = "\(currentMonth) \(year)"
             Calendar.reloadData()
             
         default:
-            month -= 1
             direction = -1
-            currentMonth = months[month - 1]
             getStartDayPosition()
+            month -= 1
+            currentMonth = months[month - 1]
             monthLabel.text = "\(currentMonth) \(year)"
             Calendar.reloadData()
         }
@@ -54,47 +55,68 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     @IBAction func nextButtonPressed(_ sender: Any) {
         switch currentMonth {
         case "December":
+            direction = 1
+            getStartDayPosition()
             month = 0
             year += 1
-            direction = 1
             currentMonth = months[month - 1]
-            getStartDayPosition()
             monthLabel.text = "\(currentMonth) \(year)"
             Calendar.reloadData()
             
         default:
             direction = 1
+            getStartDayPosition()
             month += 1
             currentMonth = months[month - 1]
-            getStartDayPosition()
             monthLabel.text = "\(currentMonth) \(year)"
-            print("numberofempty: \(NumberOfEmptyBox)")
             Calendar.reloadData()
         }
     }
     
     func getStartDayPosition() {
-//        switch direction{
-//        case 0:
-//
-//        case 1...:
-//
-//        case -1:
-//
-//        default:
-//            fatalError()
-//        }
+        switch direction{
+        case 0:
+            switch day {
+            case 1...7:
+                NumberOfEmptyBox = weekday - day
+            case 8...14:
+                NumberOfEmptyBox = weekday - day + 7
+            case 15...21:
+                NumberOfEmptyBox = weekday - day + 14
+            case 22...28:
+                NumberOfEmptyBox = weekday - day + 21
+            case 29...31:
+                NumberOfEmptyBox = weekday - day + 28
+            default:
+                break
+            }
+            positionIndex = NumberOfEmptyBox
+        case 1...:
+            nextNumberOfEmptyBox = (positionIndex + daysInMonths[month - 1])%7
+            positionIndex = nextNumberOfEmptyBox
+        case -1:
+            print("position \(positionIndex)")
+            print("second part: \(daysInMonths[month - 1])")
+            print("\(month)")
+            previousNumberOfEmptyBox = (7 - (daysInMonths[month - 1] + positionIndex)%7)
+            if previousNumberOfEmptyBox == 7 {
+                previousNumberOfEmptyBox = 0
+            }
+            positionIndex = previousNumberOfEmptyBox
+        default:
+            fatalError()
+        }
     }
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch direction {
         case 0:
-            return daysInMonths[month - 1] + NumberOfEmptyBox - 1
+            return daysInMonths[month - 1] + NumberOfEmptyBox
         case 1...:
-            return daysInMonths[month - 1] + nextNumberOfEmptyBox - 1
+            return daysInMonths[month - 1] + nextNumberOfEmptyBox
         case -1:
-            return daysInMonths[month - 1] + previousNumberOfEmptyBox - 1
+            return daysInMonths[month - 1] + previousNumberOfEmptyBox
         default:
             fatalError()
         }
@@ -108,11 +130,11 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
         switch direction {
         case 0:
-            cell.dateLabel.text = "\(indexPath.row + 2 - NumberOfEmptyBox)"
+            cell.dateLabel.text = "\(indexPath.row + 1 - NumberOfEmptyBox)"
         case 1:
-            cell.dateLabel.text = "\(indexPath.row + 2 - nextNumberOfEmptyBox)"
+            cell.dateLabel.text = "\(indexPath.row + 1 - nextNumberOfEmptyBox)"
         case -1:
-            cell.dateLabel.text = "\(indexPath.row + 2 - previousNumberOfEmptyBox)"
+            cell.dateLabel.text = "\(indexPath.row + 1 - previousNumberOfEmptyBox)"
         default:
             fatalError()
         }
