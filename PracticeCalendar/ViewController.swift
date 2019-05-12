@@ -20,7 +20,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
     let daysOfMonth = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-    let daysInMonths = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    var daysInMonths = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
     
     override func viewDidLoad() {
         Calendar.delegate = self
@@ -29,15 +29,16 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         currentMonth = months[month - 1]
         monthLabel.text = "\(currentMonth) \(year)"
         getStartDayPosition()
-    }
+            }
     
     @IBAction func backButtonPressed(_ sender: Any) {
         switch currentMonth {
         case "January":
             direction = -1
             getStartDayPosition()
-            month = 11
+            month = 12
             year -= 1
+            //
             currentMonth = months[month - 1]
             monthLabel.text = "\(currentMonth) \(year)"
             Calendar.reloadData()
@@ -57,7 +58,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         case "December":
             direction = 1
             getStartDayPosition()
-            month = 0
+            month = 1
             year += 1
             currentMonth = months[month - 1]
             monthLabel.text = "\(currentMonth) \(year)"
@@ -74,31 +75,16 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     func getStartDayPosition() {
+        checkForLeapYear()
         switch direction{
         case 0:
-            switch day {
-            case 1...7:
-                NumberOfEmptyBox = weekday - day
-            case 8...14:
-                NumberOfEmptyBox = weekday - day + 7
-            case 15...21:
-                NumberOfEmptyBox = weekday - day + 14
-            case 22...28:
-                NumberOfEmptyBox = weekday - day + 21
-            case 29...31:
-                NumberOfEmptyBox = weekday - day + 28
-            default:
-                break
-            }
+                NumberOfEmptyBox = (35 - abs(weekday - day))%7
             positionIndex = NumberOfEmptyBox
         case 1...:
             nextNumberOfEmptyBox = (positionIndex + daysInMonths[month - 1])%7
             positionIndex = nextNumberOfEmptyBox
         case -1:
-            print("position \(positionIndex)")
-            print("second part: \(daysInMonths[month - 1])")
-            print("\(month)")
-            previousNumberOfEmptyBox = (7 - (daysInMonths[month - 1] + positionIndex)%7)
+            previousNumberOfEmptyBox = (7 - ((7 - positionIndex) + daysInMonths[(month + 22)%12])%7)
             if previousNumberOfEmptyBox == 7 {
                 previousNumberOfEmptyBox = 0
             }
@@ -108,6 +94,17 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
     }
     
+    func checkForLeapYear() {
+        if year%4 == 0 && year%100 != 0 {
+            daysInMonths[1] = 29
+        }
+        else if year%400 == 0 {
+            daysInMonths[1] = 29
+        }
+        else {
+            return
+        }
+    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch direction {
